@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Azalea Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: institutional health nonprofit — calm, credible, specific
+   IDEA: the site of an established public-health charity: photography first, plain names, clear structure
+   PICTURE: large documentary photography (placeholders) — hero and a community strip
+   COLOUR and TYPE: white, navy #14233b, neutral greys; pastels only as functional signals; Inter Tight + Inter
+   LAYOUT: utility notice, header with collapsible menu, full-bleed hero, alternating white/grey bands */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0f141c);--soft:light-dark(#f5f6f8,#151b25);--card:light-dark(#ffffff,#18202c);
+--ink:light-dark(#1b2433,#edf0f5);--mute:light-dark(#5a6474,#a6afbd);--line:light-dark(#e3e6eb,#29313f);
+--navy:#14233b;--photo:light-dark(#e4e7ec,#222b38);--photoink:light-dark(#6b7484,#93a0b3);
+--sky:light-dark(#e8f1fa,#172435);--skyink:light-dark(#1f5a8f,#9ccaf2);
+--sun:light-dark(#fef9e6,#2a2618);--sunink:light-dark(#6b520a,#ecd27e);
+--mint:light-dark(#e3f3ea,#152720);--mintink:light-dark(#1c6646,#8fd8b5);
+--rose:light-dark(#fae7ee,#2c1e25);--pinkink:light-dark(#8f1745,#f5a3c2)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Inter Tight',Inter,sans-serif;font-weight:500;letter-spacing:-.02em;line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,4.8vw,54px)}h2{font-size:clamp(26px,3vw,34px)}h3{font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.3}
+p{margin:0}a{color:var(--skyink)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 max(4vw,20px)}
+.band{padding:clamp(56px,7vw,96px) 0}.band.shut{padding:30px 0}
+.grey{background:color-mix(in srgb,var(--acc,#8fbbe3) 13%,var(--bg))}.navy{background:var(--navy);color:#e9edf3}.navy .mute{color:#b9c2d0}.navy .eyebrow{color:#b9c2d0}
+.mute{color:var(--mute)}
+.eyebrow{font-size:13px;font-weight:600;color:var(--mute);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";flex:none;width:18px;height:4px;border-radius:2px;background:var(--acc,#8fbbe3)}
+main section:nth-of-type(5n+1){--acc:#8fbbe3}main section:nth-of-type(5n+2){--acc:#f2e2a4}main section:nth-of-type(5n+3){--acc:#8fd1b3}main section:nth-of-type(5n+4){--acc:#b4a6e6}main section:nth-of-type(5n+5){--acc:#eb9bb8}
+.stripe{height:4px;background:linear-gradient(90deg,#8fbbe3 0 20%,#f2e2a4 20% 40%,#8fd1b3 40% 60%,#b4a6e6 60% 80%,#eb9bb8 80%)}
+.lead{font-size:18px;color:var(--mute);max-width:40em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:4px;border:1px solid transparent;font:500 15px Inter,sans-serif;text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s}
+.btn.n{background:var(--navy);color:#fff}.btn.n:hover{background:#0b1626}
+.btn.o{background:transparent;border-color:color-mix(in srgb,currentColor 35%,transparent);color:inherit}.btn.o:hover{border-color:currentColor}
+.btn.d{background:rgba(192,36,95,.10);border-color:rgba(192,36,95,.32);color:var(--pinkink);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.btn.d:hover{background:rgba(192,36,95,.18)}
+.btn.w{background:#fff;color:var(--navy)}
+.btn.full{width:100%}
+.link{font-weight:500;text-decoration:none;color:var(--skyink)}.link:hover{text-decoration:underline}
+:focus-visible{outline:2px solid #5b9bd5;outline-offset:2px}
+/* notice + header */
+.notice{background:var(--sun);color:var(--sunink);font-size:13px}.notice .wrap{display:flex;gap:10px;align-items:center;min-height:38px;padding-top:6px;padding-bottom:6px}
+.bar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font:600 18px 'Inter Tight',sans-serif;letter-spacing:-.01em}
+.acts{display:flex;align-items:center;gap:8px}
+.iconbtn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:4px;background:var(--card);color:var(--ink);font:500 15px Inter,sans-serif;cursor:pointer;text-decoration:none}
+.count{font-size:12px;font-weight:600;color:var(--skyink);background:var(--sky);padding:1px 7px;border-radius:3px}
+@media(max-width:560px){.hide-s{display:none}}
+.drawer{position:fixed;inset:0;z-index:40;display:none}.drawer.open{display:block}
+.drawer .scrim{position:absolute;inset:0;background:rgba(10,16,26,.45)}
+.drawer .panel{position:absolute;top:0;right:0;bottom:0;width:min(400px,90vw);background:var(--bg);border-left:1px solid var(--line);padding:24px;overflow:auto;animation:slide .2s ease-out}
+.drawer nav a{display:flex;justify-content:space-between;align-items:baseline;padding:16px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font:500 19px 'Inter Tight',sans-serif}
+.drawer nav a small{font:400 13px Inter,sans-serif;color:var(--mute)}
+.drawer nav a:hover,.drawer nav a[aria-current=page]{color:var(--skyink)}
+@keyframes slide{from{transform:translateX(24px);opacity:0}}
+/* collapsible heads */
+.sh{display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.tog{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 10px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--mute);font:500 13px Inter,sans-serif;cursor:pointer}
+.navy .tog{border-color:#2d3d57;color:#b9c2d0}
+.tog svg{transition:transform .2s}.tog[aria-expanded=false] svg{transform:rotate(-90deg)}
+.sb{margin-top:36px}
+.tools{display:flex;justify-content:flex-end;gap:4px;padding-top:14px}
+.tools button{border:0;background:none;color:var(--mute);font:500 13px Inter,sans-serif;cursor:pointer;min-height:40px;padding:0 8px}.tools button:hover{color:var(--ink)}
+/* photo */
+.photo{background:var(--photo);color:var(--photoink);display:flex;flex-direction:column;gap:6px;align-items:center;justify-content:center;text-align:center;font-size:13px}
+.hero{background:linear-gradient(180deg,color-mix(in srgb,#8fbbe3 16%,var(--bg)),var(--bg));border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(28px,5vw,64px);align-items:center;padding-top:clamp(40px,6vw,80px);padding-bottom:clamp(40px,6vw,80px)}
+.hero .lead{margin-top:18px}.hero .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero .photo{aspect-ratio:4/3;border-radius:6px}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:20px}
+.strip figure{margin:0}.strip .photo{aspect-ratio:4/3}.strip figcaption{font-size:14px;color:var(--mute);margin-top:10px}
+/* layout pieces */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:24px}
+.split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(400px,100%),1fr));gap:48px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;overflow:hidden}
+.card .in{padding:24px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card .photo{aspect-ratio:16/10}
+.cat{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--mute)}.cat i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.accent{height:4px}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));border-top:1px solid var(--line)}
+.figs div{padding:28px 24px 4px 0}.figs div:nth-child(1) b{--u:#8fbbe3}.figs div:nth-child(2) b{--u:#f2e2a4}.figs div:nth-child(3) b{--u:#8fd1b3}.figs div:nth-child(4) b{--u:#b4a6e6}.figs b::after{content:"";display:block;width:40px;height:3px;border-radius:2px;background:var(--u);margin-top:14px}.figs b{display:block;font:500 clamp(40px,4.6vw,52px)/1 'Inter Tight',sans-serif;letter-spacing:-.03em;color:var(--ink)}
+.figs p{margin-top:12px;color:var(--mute)}.src{font-size:12px;color:var(--mute);margin-top:8px;opacity:.8}
+.list{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.row-item{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}
+.date{flex:none;width:72px;text-align:center;border:1px solid var(--line);border-radius:4px;padding:8px 0;font-size:12px;color:var(--mute)}.date b{display:block;font:500 18px 'Inter Tight',sans-serif;color:var(--ink)}
+/* controls */
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:42px;padding:0 16px;border-radius:4px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:500 14px Inter,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--sky);border-color:color-mix(in srgb,var(--skyink) 40%,transparent);color:var(--skyink)}
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin-bottom:28px;overflow-x:auto}
+.tabs button{flex:none;min-height:48px;padding:0 16px;border:0;background:none;color:var(--mute);font:500 15px Inter,sans-serif;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--navy)}
+label.f{display:block;font-size:14px;font-weight:500;margin:16px 0 8px}
+input,textarea{width:100%;min-height:48px;padding:11px 14px;border:1px solid color-mix(in srgb,var(--ink) 22%,transparent);border-radius:4px;background:var(--card);color:var(--ink);font:16px Inter,sans-serif}
+input:focus,textarea:focus{border-color:#5b9bd5;outline:none;box-shadow:0 0 0 3px color-mix(in srgb,#5b9bd5 25%,transparent)}
+.check{display:flex;gap:12px;align-items:flex-start;margin-top:16px;font-size:15px;cursor:pointer}.check input{width:18px;height:18px;min-height:0;margin-top:3px;accent-color:var(--navy)}
+.err{color:#b3261e;font-size:14px;font-weight:500;margin-top:10px}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:0 16px}
+.amts{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px}.amts .chip{min-height:54px;font-size:17px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 28px;padding:0;list-style:none}
+.steps li{border-top:3px solid var(--line);padding-top:8px;font-size:13px;font-weight:500;color:var(--mute)}.steps li.on{border-color:var(--navy);color:var(--ink)}
+.info{background:var(--sky);color:var(--ink);border-radius:4px;padding:16px 18px;font-size:15px}
+.ok{background:var(--mint);color:var(--mintink);border-radius:4px;padding:28px;text-align:center}
+.ok h2{color:var(--ink)}
+.okicon{width:52px;height:52px;margin:0 auto 16px;border-radius:50%;background:var(--mintink);display:flex;align-items:center;justify-content:center}
+.faq>div{border-bottom:1px solid var(--line)}
+.faq button{width:100%;display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:62px;padding:12px 0;border:0;background:none;color:var(--ink);font:500 17px Inter,sans-serif;text-align:left;cursor:pointer}
+.faq .a{padding:0 0 22px;color:var(--mute);max-width:46em}
+.phase{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.phase button{min-height:84px;padding:16px;border:0;border-right:1px solid var(--line);background:var(--card);color:var(--ink);text-align:left;font:500 15px Inter,sans-serif;cursor:pointer}
+.phase button small{display:block;font-size:12px;color:var(--mute);margin-bottom:6px}
+.phase button[aria-pressed=true]{background:var(--sky);color:var(--skyink)}
+.status{display:inline-block;font-size:12px;font-weight:600;padding:3px 8px;border-radius:3px;background:var(--soft);color:var(--mute)}.status.now{background:var(--mint);color:var(--mintink)}
+.mapbox{position:relative;background:var(--soft);border:1px solid var(--line);border-radius:4px;aspect-ratio:3/2;overflow:hidden}.mapbox svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{cursor:pointer}
+.loc{display:flex;flex-direction:column;gap:8px;max-height:520px;overflow:auto}
+.loc button{all:unset;box-sizing:border-box;display:block;cursor:pointer;padding:14px 16px;border:1px solid var(--line);border-radius:4px;background:var(--card)}
+.loc button[aria-pressed=true]{background:var(--sky);border-color:color-mix(in srgb,var(--skyink) 40%,transparent)}
+.loc button:focus-visible{outline:2px solid #5b9bd5}
+.swatch{width:40px;height:40px;border-radius:4px;border:1px solid var(--line);cursor:pointer}.swatch[aria-pressed=true]{outline:2px solid var(--navy);outline-offset:2px}
+.sheet{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center}.sheet.open{display:flex}
+.sheet .scrim{position:absolute;inset:0;background:rgba(10,16,26,.5)}
+.sheet .box{position:relative;background:var(--bg);width:min(540px,100%);max-height:92vh;overflow:auto;padding:28px;border-radius:6px;animation:up .2s ease-out}
+@media(max-width:600px){.sheet{align-items:flex-end}.sheet .box{border-radius:12px 12px 0 0}}
+@keyframes up{from{transform:translateY(16px);opacity:0}}
+.x{position:absolute;top:10px;right:10px;width:44px;height:44px;border:0;background:none;color:var(--ink);cursor:pointer;font-size:24px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:13px 20px;border-radius:4px;font-size:15px;z-index:60;display:none;max-width:90vw}.toast.show{display:block;animation:up .2s ease-out}
+footer{background:var(--navy);color:#b9c2d0;font-size:15px}footer a{color:#e9edf3;text-decoration:none}footer a:hover{text-decoration:underline}
+footer .cols{display:flex;flex-wrap:wrap;gap:48px;justify-content:space-between}footer .cols div{display:flex;flex-direction:column;gap:10px}
+.proto{margin:0;font-size:12px;color:var(--mute);text-align:center;padding:10px;background:var(--soft)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="notice" role="note"><div class="wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg><span>If someone is having trouble breathing and it isn't improving, call 911. This website does not provide medical advice.</span></div></div>
+<header class="bar"><div class="wrap">
+<a class="logo" href="#home" aria-label="The Azalea Project home"><svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><g fill="#c0245f"><ellipse cx="15" cy="7" rx="4.5" ry="6.5"/><ellipse cx="15" cy="7" rx="4.5" ry="6.5" transform="rotate(72 15 15)"/><ellipse cx="15" cy="7" rx="4.5" ry="6.5" transform="rotate(144 15 15)"/><ellipse cx="15" cy="7" rx="4.5" ry="6.5" transform="rotate(216 15 15)"/><ellipse cx="15" cy="7" rx="4.5" ry="6.5" transform="rotate(288 15 15)"/></g><circle cx="15" cy="15" r="2.6" fill="#fff"/></svg>The Azalea Project</a>
+<div class="acts">
+<button class="iconbtn" id="bagBtn" aria-label="Shopping bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="count" id="bagCount">0</span></button>
+<a class="btn d" href="#give" style="min-height:44px">Donate</a>
+<button class="iconbtn" id="menuBtn" aria-label="Open menu" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="hide-s">Menu</span></button>
+</div></div></header>
+
+<div class="drawer" id="drawer"><div class="scrim" data-close></div><div class="panel" role="dialog" aria-label="Menu">
+<button class="x" data-close aria-label="Close menu">×</button><p class="eyebrow" style="margin:6px 0 18px">Menu</p>
+<nav aria-label="Main">
+<a href="#home">Home <small>Overview</small></a>
+<a href="#people">Our People <small>Story, team, FAQ</small></a>
+<a href="#work">Our Work <small>Programs</small></a>
+<a href="#find">Inhaler Locator <small>Find a supply</small></a>
+<a href="#events">Events <small>Fundraisers &amp; outreach</small></a>
+<a href="#hand">Get Involved <small>Volunteer</small></a>
+<a href="#shop">Shop <small>Proceeds fund inhalers</small></a>
+<a href="#home" data-contact="1">Contact <small>Get in touch</small></a>
+</nav>
+<a class="btn n full" href="#give" style="margin-top:24px">Donate</a></div></div>
+
+<main id="view"></main>
+
+<div class="stripe" aria-hidden="true"></div>
+<footer><div class="wrap" style="padding-top:64px;padding-bottom:28px"><div class="cols">
+<div style="max-width:340px"><span style="font:600 20px 'Inter Tight',sans-serif;color:#fff">The Azalea Project</span><span>Improving asthma awareness and emergency inhaler access across the Pittsburgh area.</span><span>hello@azaleaproject.org</span></div>
+<div><strong style="color:#fff;font-weight:600">Organization</strong><a href="#people">Our People</a><a href="#people">FAQ</a><a href="#home">Partner with us</a></div>
+<div><strong style="color:#fff;font-weight:600">Programs</strong><a href="#work">Our Work</a><a href="#find">Inhaler Locator</a><a href="#events">Events</a></div>
+<div><strong style="color:#fff;font-weight:600">Support</strong><a href="#give">Donate</a><a href="#hand">Volunteer</a><a href="#shop">Shop</a></div>
+</div><p style="margin-top:40px;padding-top:20px;border-top:1px solid #2a3a54;font-size:13px">© 2026 The Azalea Project · Nonprofit status in progress · Privacy · Accessibility</p></div></footer>
+<p class="proto">Prototype — figures, locations, events, prices and team details are placeholders.</p>
+
+<div class="sheet" id="sheet"><div class="scrim" data-sclose></div><div class="box" role="dialog" aria-modal="true" aria-labelledby="sheetT"><button class="x" data-sclose aria-label="Close">×</button><div id="sheetBody"></div></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+{
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=v=>'$'+(Number.isInteger(v)?v:v.toFixed(2));
+const S={closed:new Set(),donate:{step:1,freq:'monthly',amt:50,custom:'',tribute:false,first:'',email:'',method:'card',cover:true,err:''},
+ tab:'All',open:{},faq:0,gfaq:-1,filter:'all',vDone:null,phase:0,site:null,q:'',stype:'all',etype:'all',cat:'All',pd:null,bag:[]};
+const cam='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
+const photo=(l,st='')=>`<div class="photo" style="${st}">${cam}<span>${l}</span></div>`;
+const chev='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+const sec=(id,eb,title,body,cls='',lead='')=>{const c=S.closed.has(id);return `<section class="band ${cls} ${c?'shut':''}"><div class="wrap"><div class="sh"><div>${eb?`<p class="eyebrow">${eb}</p>`:''}<h2 id="t-${id}">${title}</h2>${lead&&!c?`<p class="lead" style="margin-top:12px">${lead}</p>`:''}</div><button class="tog" data-sec="${id}" aria-expanded="${!c}" aria-controls="b-${id}" aria-describedby="t-${id}">${c?'Show':'Hide'} ${chev}</button></div><div class="sb" id="b-${id}" ${c?'hidden':''}>${body}</div></div></section>`};
+const tools=ids=>`<div class="wrap tools"><button data-all="open" data-ids="${ids}">Expand all</button><button data-all="shut" data-ids="${ids}">Collapse all</button></div>`;
+const okIcon='<div class="okicon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></div>';
+const catColor={Access:'#6fa6d9',Education:'#efdc94',Community:'#6cc19b',Fundraiser:'#e07fa3',Outreach:'#9b8ee0',Schools:'#efdc94'};
+const cat=t=>`<span class="cat"><i style="background:${catColor[t]||'#aab'}"></i>${t}</span>`;
+
+const stats=[['—','of children in our area live with asthma','Local figure from your research'],['—','of children with asthma do not have it well controlled','Local figure from your research'],['—','school days missed due to asthma each year','Local figure from your research'],['—','asthma-related emergency visits each year','Local figure from your research']];
+const phases=[['Phase 1','Research & proposal','Compile local research into one evidence-based proposal and present it to city, county and state leaders.','In progress'],['Phase 2','Fundraising & outreach','Launch the website, merchandise and first public events to build funding and awareness.','Next'],['Phase 3','Inhaler Access Network','Work with public and community partners to place emergency inhaler supplies across Pittsburgh, each listed in the locator.','Planned'],['Phase 4','Education in schools','Publish the Breathe Easy book series and deliver classroom sessions and after-school clubs.','Planned'],['Phase 5','Documentary & clubs','Produce a short documentary and expand student-led chapters.','Planned']];
+const programs=[
+ {id:1,area:'Access',title:'Inhaler Access Network',body:'Emergency inhaler supplies at schools, community centers and partner pharmacies, each mapped in our public locator.',who:'Residents of the Pittsburgh area',when:'Pilot planned',more:'We are seeking partnerships with public agencies, clinics and community sites to stock and maintain emergency supplies, with trained staff at each location.',link:'#find',cta:'View the locator'},
+ {id:2,area:'Education',title:'Breathe Easy book series',body:'A three-book series for children on recognizing asthma, responding to symptoms and finding help.',who:'Children ages 5–11 and caregivers',when:'In development',more:'Book 1: What Is Asthma? (including exercise-induced asthma). Book 2: Recognizing and Treating Asthma. Book 3: Where to Get Help.',books:1},
+ {id:3,area:'Education',title:'School sessions',body:'Classroom sessions on asthma symptoms, how to ask for help, and how inhalers work, using demonstration devices without medication.',who:'Elementary schools',when:'Planned',more:'Each session is 30–45 minutes, aligned with existing school health lessons, and leaves teachers with a one-page reference guide.'},
+ {id:4,area:'Community',title:'After-school clubs',body:'Weekly clubs for elementary students on lung health and helping peers, led by trained high school volunteers.',who:'Elementary students',when:'Planned',more:'Clubs give younger students consistent mentorship and give high school volunteers documented service hours and leadership experience.'},
+ {id:5,area:'Community',title:'Documentary',body:'A short film documenting the experiences of Pittsburgh families, school nurses and students living with asthma.',who:'General public',when:'Future',more:'Screenings at community events and for decision-makers will support the case for inhaler access.'}];
+const sites=[{id:1,hood:'Neighborhood A',name:'Community recreation center',type:'Community',x:505,y:178},{id:2,hood:'Neighborhood B',name:'Elementary school nurse office',type:'School',x:345,y:212},{id:3,hood:'Neighborhood C',name:'Public library branch',type:'Community',x:392,y:145},{id:4,hood:'Neighborhood D',name:'Partner pharmacy',type:'Pharmacy',x:410,y:228},{id:5,hood:'Neighborhood E',name:'Youth sports complex',type:'Community',x:505,y:318},{id:6,hood:'Neighborhood F',name:'Middle school nurse office',type:'School',x:548,y:205},{id:7,hood:'Neighborhood G',name:'Partner pharmacy',type:'Pharmacy',x:282,y:158},{id:8,hood:'Neighborhood H',name:'Community health center',type:'Community',x:560,y:372}];
+const events=[
+ {id:1,type:'Fundraiser',m:'Spring',d:'2027',title:'Community 5K for Asthma Awareness',desc:'A family 5K and walk, with a short pre-race briefing on exercise-induced asthma.',where:'Location to be announced'},
+ {id:2,type:'Fundraiser',m:'Winter',d:'2027',title:'Merchandise launch',desc:'Release of our first apparel collection. All proceeds support inhaler access.',where:'Online and pop-up'},
+ {id:3,type:'Outreach',m:'May',d:'2027',title:'Asthma Awareness Month forum',desc:'A public forum with health professionals, families and community partners.',where:'Venue to be announced'},
+ {id:4,type:'Schools',m:'Fall',d:'2027',title:'First school sessions',desc:'Initial classroom sessions with partner elementary schools.',where:'Partner schools'},
+ {id:5,type:'Outreach',m:'Aug',d:'2027',title:'Back-to-school inhaler check',desc:'Helping families confirm inhalers are current before the school year.',where:'Neighborhood sites'}];
+const roles=[{id:'g',title:'General volunteer',desc:'Share your interests and availability and we will match you with a role.',when:'Flexible',where:'Pittsburgh area / remote',tags:['hours','remote']},{id:'e',title:'Event staff',desc:'Registration, set-up and information tables at public events.',when:'Weekends',where:'Pittsburgh area',tags:['hours','weekend']},{id:'c',title:'After-school club assistant',desc:'Support weekly clubs for elementary students alongside our team.',when:'Weekday afternoons',where:'Partner schools',tags:['hours']},{id:'d',title:'School session assistant',desc:'Help deliver classroom sessions on asthma awareness.',when:'School days',where:'Partner schools',tags:['hours']},{id:'m',title:'Communications & media',desc:'Photography, video, design and social media support.',when:'Project-based',where:'Remote / on site',tags:['hours','remote']},{id:'r',title:'Research & writing',desc:'Support the proposal, grant applications and the book series.',when:'Project-based',where:'Remote',tags:['remote']}];
+const tagName={hours:'Service hours eligible',weekend:'Weekends',remote:'Remote'};
+const products=[
+ {id:'tee',name:'Logo T-shirt',cat:'Apparel',price:25,colors:{White:'#ffffff',Navy:'#14233b',Sky:'#cfe1f3',Rose:'#f3d3de'},sizes:['YS','YM','YL','S','M','L','XL','XXL']},
+ {id:'hoodie',name:'Pullover hoodie',cat:'Apparel',price:45,colors:{Navy:'#14233b',Heather:'#c9cdd4',Lavender:'#dcd6f0'},sizes:['S','M','L','XL','XXL']},
+ {id:'crew',name:'Crewneck sweatshirt',cat:'Apparel',price:38,colors:{Heather:'#c9cdd4',Butter:'#f6ebc0'},sizes:['S','M','L','XL','XXL']},
+ {id:'youth',name:'Youth T-shirt',cat:'Apparel',price:18,colors:{White:'#ffffff',Mint:'#d3ebdf'},sizes:['2T','4T','YS','YM','YL']},
+ {id:'cap',name:'Structured cap',cat:'Accessories',price:22,colors:{Navy:'#14233b',White:'#ffffff'}},
+ {id:'beanie',name:'Knit beanie',cat:'Accessories',price:20,colors:{Navy:'#14233b',Heather:'#c9cdd4'}},
+ {id:'tote',name:'Canvas tote',cat:'Accessories',price:18,colors:{Natural:'#efe9dd'}},
+ {id:'bottle',name:'Insulated water bottle',cat:'Accessories',price:20,colors:{White:'#ffffff',Navy:'#14233b',Mint:'#d3ebdf'}},
+ {id:'stickers',name:'Sticker set',cat:'Small goods',price:6},
+ {id:'band',name:'Awareness wristband',cat:'Small goods',price:4,colors:{Rose:'#f3d3de',Sky:'#cfe1f3'}},
+ {id:'pin',name:'Enamel pin',cat:'Small goods',price:8},
+ {id:'books',name:'Breathe Easy book set',cat:'Books',price:30,soon:true}];
+const cats=['All','Apparel','Accessories','Small goods','Books'];
+const faqs=[['Is this medical advice?','No. Always follow your doctor’s asthma action plan. If someone is having trouble breathing and it is not improving, call 911.'],['Do you provide inhalers today?','Not yet. Establishing the Inhaler Access Network with public and community partners is our central goal.'],['Can high school students earn service hours?','Yes. We document and verify service hours for volunteers at events, clubs and school sessions.'],['Why focus on inhalers?','An inhaler is only effective if it is available when it is needed. Too often, it is not.'],['How can an organization partner with you?','Select “Partner with us” on the home page and our team will follow up.']];
+const gfaqs=[['Is my donation tax-deductible?','We are in the process of establishing nonprofit status. Tax-deductibility will be confirmed here once approved.'],['How are donations used?','Donations fund inhaler access, educational materials, school programs and events. We will publish an annual accounting of all funds.'],['Can I cancel a monthly gift?','Yes, at any time. Contact us and we will update it the same day.']];
+const team=[['Founder & Executive Director','Leads the organization’s direction, research and the proposal to city, county and state leaders, and serves as the primary contact for partners.'],['Co-founder & Deputy Director','Second in leadership. Oversees programs — the book series, school sessions and after-school clubs — and steps in for the Executive Director.'],['Co-founder & Director of Outreach','Leads events, fundraising, merchandise, volunteers and communications.']];
+const faqList=(list,key)=>`<div class="faq" style="max-width:880px;border-top:1px solid var(--line)">${list.map(([q,a],i)=>`<div><button aria-expanded="${S[key]===i}" data-${key}="${i}">${q}<span aria-hidden="true" style="color:var(--mute);font-weight:400">${S[key]===i?'−':'+'}</span></button>${S[key]===i?`<p class="a">${a}</p>`:''}</div>`).join('')}</div>`;
+const filteredSites=()=>sites.filter(s=>(S.stype==='all'||s.type===S.stype)&&(!S.q||(s.hood+' '+s.name).toLowerCase().includes(S.q.toLowerCase())));
+const mapSvg=()=>{const shown=filteredSites().map(s=>s.id);return `<svg viewBox="0 0 640 427" role="img" aria-label="Map of the Pittsburgh area with planned inhaler locations">
+<g fill="none" stroke="#9cc3e6" stroke-opacity=".7" stroke-linecap="round"><path d="M300 200 C230 190 150 150 0 160" stroke-width="16"/><path d="M300 200 C360 160 430 120 640 40" stroke-width="12"/><path d="M300 200 C380 230 440 280 640 360" stroke-width="12"/></g>
+<g font-size="12" fill="var(--mute)"><text x="40" y="146">Ohio River</text><text x="520" y="62">Allegheny River</text><text x="500" y="350">Monongahela River</text><text x="272" y="232" font-weight="600" fill="var(--ink)">Downtown</text></g>
+<rect x="294" y="194" width="12" height="12" fill="var(--ink)"/>
+${sites.map(s=>{const on=S.site===s.id,vis=shown.includes(s.id);return `<g class="pin" data-site="${s.id}" tabindex="0" role="button" aria-label="${s.name}, ${s.hood}" opacity="${vis?1:.2}">${on?`<circle cx="${s.x}" cy="${s.y}" r="18" fill="#1f5a8f" fill-opacity=".15"/>`:''}<circle cx="${s.x}" cy="${s.y}" r="${on?8:6}" fill="#1f5a8f" stroke="#fff" stroke-width="2"/>${on?`<text x="${s.x}" y="${s.y-24}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink)">${s.hood}</text>`:''}</g>`}).join('')}</svg>`};
+
+const intro=(eb,title,lead,cls='grey')=>`<section class="band ${cls}" style="padding-bottom:56px"><div class="wrap"><p class="eyebrow">${eb}</p><h1>${title}</h1>${lead?`<p class="lead" style="margin-top:16px">${lead}</p>`:''}</div></section>`;
+
+const views={
+home:()=>`<section class="hero"><div class="wrap"><div><p class="eyebrow">Asthma awareness and inhaler access · Pittsburgh, PA</p>
+<h1>No one should go without an inhaler in an emergency.</h1>
+<p class="lead">The Azalea Project works to place emergency inhalers within reach across the Pittsburgh area and to teach children and adults to recognize asthma and respond quickly.</p>
+<div class="row"><a class="btn n" href="#work">Our work</a><a class="btn o" href="#give" style="color:var(--ink)">Make a donation</a></div></div>
+${photo('Main photograph — your team with families at a community event')}</div></section>
+<section class="band" style="padding-bottom:0"><div class="wrap strip">${[['Community outreach','Volunteers at a neighborhood event'],['School sessions','A classroom session on asthma awareness'],['Inhaler access','A partner site in the network']].map(([t,c])=>`<figure>${photo('Photograph — '+t)}<figcaption>${c}</figcaption></figure>`).join('')}</div></section>
+<section class="band" style="padding-bottom:0"><div class="wrap"><div class="card" style="flex-direction:row;flex-wrap:wrap;background:var(--sky);border-color:transparent">${photo('Banner photograph — inhaler access site','flex:1 1 420px;aspect-ratio:auto;min-height:260px;background:#d5e3f1')}<div class="in" style="flex:1 1 340px;padding:clamp(24px,4vw,44px);justify-content:center"><p class="eyebrow" style="margin:0;color:var(--skyink)">Flagship program</p><h2>The Inhaler Access Network</h2><p class="mute" style="font-size:17px">Emergency inhaler supplies in schools, community centers and partner pharmacies across Pittsburgh — each listed in a public locator.</p><div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px"><a class="btn n" href="#work" data-open="1">Learn more</a><a class="btn o" href="#find" style="color:var(--ink)">Open the locator</a></div></div></div></div></section>
+${tools('h1,h2,h3,r1,h4,h5,s1,n1,h6,pa,h7')}
+${sec('h1','The issue','Asthma is under-recognized and under-resourced',`<div class="figs">${stats.map(([n,t,s])=>`<div><b>${n}</b><p>${t}</p><p class="src">${s}</p></div>`).join('')}</div>`,'','When a child’s inhaler is lost, forgotten or empty, there is often no backup nearby, and many people do not recognize the signs of an asthma emergency.')}
+${sec('h2','Our approach','A phased plan',`<div class="phase" role="group" aria-label="Plan phases">${phases.map(([k,t],i)=>`<button aria-pressed="${S.phase===i}" data-phase="${i}"><small>${k}</small>${t}</button>`).join('')}</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:20px"><span class="status ${phases[S.phase][3]==='In progress'?'now':''}">${phases[S.phase][3]}</span><p style="flex:1 1 380px;font-size:17px">${phases[S.phase][2]}</p></div>`,'grey')}
+${sec('h3','Our work','Programs',`<div class="grid">${programs.slice(0,3).map(p=>`<article class="card"><div class="accent" style="background:${catColor[p.area]}"></div>${photo('Program photograph')}<div class="in">${cat(p.area)}<h3>${p.title}</h3><p class="mute">${p.body}</p><a class="link" href="#work" data-open="${p.id}" style="margin-top:auto">Learn more →</a></div></article>`).join('')}</div>`)}
+${sec('r1','Resources','For educators and families',`<div class="grid">${[['Classroom session guide','A lesson outline for teachers on asthma symptoms and asking for help.','#efdc94'],['Breathe Easy book previews','Sample pages from the three-book children’s series.','#6fa6d9'],['Family asthma checklist','A one-page checklist for keeping inhalers current and accessible.','#6cc19b']].map(([t,d,c])=>`<article class="card"><div class="accent" style="background:${c}"></div><div class="in"><h3>${t}</h3><p class="mute">${d}</p><button class="link" style="all:unset;cursor:pointer;color:var(--skyink);font-weight:500;margin-top:auto" data-toast="Resource available soon">Download (coming soon) →</button></div></article>`).join('')}</div>`,'grey')}
+${sec('h4','Inhaler Locator','Finding help, close by',`<div class="split" style="align-items:center"><div class="mapbox">${mapSvg()}</div><div><p class="mute" style="font-size:17px">Our locator will show the nearest emergency inhaler supply in the network, with hours and on-site contacts.</p><a class="btn n" href="#find" style="margin-top:22px">Open the locator</a></div></div>`)}
+${sec('h5','Partnerships','Partner with us',`<div class="split" style="align-items:center"><p class="mute" style="font-size:17px">We are preparing an evidence-based proposal for city, county and state leaders, school districts and health systems. We welcome conversations with organizations that can help place inhalers where they are needed.</p><div class="row" style="display:flex;flex-wrap:wrap;gap:12px"><button class="btn n" data-partner="1">Partner with us</button><a class="btn o" href="#people" style="color:var(--ink)">About our team</a></div></div>`,'grey')}
+${sec('s1','Shop','Support us with a purchase',`<div class="grid">${[['Apparel','T-shirts, hoodies and crewnecks.','Apparel'],['Accessories','Caps, totes, water bottles and more.','Accessories']].map(([t,d,c])=>`<article class="card">${photo('Product photograph')}<div class="in"><h3>${t}</h3><p class="mute">${d} All proceeds support inhaler access.</p><a class="link" href="#shop" data-cat="${c}" style="margin-top:auto">Shop ${t.toLowerCase()} →</a></div></article>`).join('')}</div>`)}
+${sec('n1','News','News and stories',`<div class="split" style="gap:32px"><article class="card">${photo('Featured story photograph')}<div class="in"><span class="mute" style="font-size:13px">Announcement · Date to be announced</span><h3 style="font-size:22px">Introducing the Azalea Project</h3><p class="mute">Why we are focusing on asthma awareness and emergency inhaler access in Pittsburgh.</p><button style="all:unset;cursor:pointer;color:var(--skyink);font-weight:500" data-toast="Stories will be published here">Read more →</button></div></article>
+<div class="list">${[['Update','Our proposal to local and state leaders'],['Program','Developing the Breathe Easy book series'],['Volunteers','How high school volunteers earn service hours'],['Events','Planning our first community 5K']].map(([c,t])=>`<div class="row-item" style="padding:18px 0"><div><span class="mute" style="font-size:13px">${c} · Date to be announced</span><h3 style="font-size:17px;margin-top:4px">${t}</h3></div><button class="tog" style="border:0" data-toast="Stories will be published here" aria-label="Read ${t}">→</button></div>`).join('')}</div></div>`,'grey')}
+${sec('h6','Events','Upcoming',`<div class="list">${events.slice(0,3).map(e=>`<div class="row-item"><div style="display:flex;gap:20px;align-items:center;flex:1 1 380px"><div class="date">${e.m}<b>${e.d}</b></div><div>${cat(e.type)}<h3 style="margin-top:4px">${e.title}</h3></div></div><a class="link" href="#events">Details →</a></div>`).join('')}</div>`)}
+${sec('pa','Partners','Thank you to our supporting partners',`<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));gap:16px">${Array.from({length:6},()=>`<div class="photo" style="height:72px;background:var(--soft);border:1px solid var(--line);border-radius:4px">Partner logo</div>`).join('')}</div>`,'grey')}
+${sec('h7','Newsletter','Receive updates',`<form id="news" style="max-width:620px" novalidate><p class="mute">Program updates, events and opportunities to get involved, about once a month.</p><label class="f" for="nEmail">Email address</label><div style="display:flex;flex-wrap:wrap;gap:10px"><input id="nEmail" type="email" placeholder="name@example.com" autocomplete="email" style="flex:1 1 240px"><button class="btn n">Subscribe</button></div><p class="err" id="nErr" hidden></p></form>`)}`,
+
+people:()=>`<section class="band grey"><div class="wrap split" style="align-items:center"><div><p class="eyebrow">Our People</p><h1>About the Azalea Project</h1><p class="lead" style="margin-top:18px">The Azalea Project brings together several initiatives around a single, persistent problem: asthma is not recognized or provided for nearly enough. Our work combines research, advocacy with public leaders, and programs that reach children directly.</p></div>${photo('Team photograph','aspect-ratio:4/3')}</div></section>
+${tools('p1,p2,p3')}
+${sec('p1','Principles','What guides our work',`<div class="grid">${[['Access','An inhaler is only effective if it is available at the moment it is needed.'],['Early education','Children who recognize symptoms can ask for help and support their peers.'],['Evidence','Our proposals and materials are grounded in published research.'],['Youth leadership','High school volunteers lead events and clubs and earn verified service hours.']].map(([t,d])=>`<div style="border-top:2px solid var(--navy);padding-top:16px"><h3>${t}</h3><p class="mute" style="margin-top:8px">${d}</p></div>`).join('')}</div>`)}
+${sec('p2','Leadership','Our founders',`<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))">${team.map(([r,d])=>`<div class="card">${photo('Headshot','aspect-ratio:4/3')}<div class="in"><h3>Name</h3><p style="font-size:15px;font-weight:500">${r}</p><p class="mute" style="font-size:15px">${d}</p></div></div>`).join('')}</div>`,'grey')}
+${sec('p3','FAQ','Frequently asked questions',faqList(faqs,'faq'))}`,
+
+work:()=>`${intro('Our Work','Programs','Access, education and community programs that reinforce one another.')}
+${sec('w1','','All programs',`<div class="tabs" role="tablist">${['All','Access','Education','Community'].map(t=>`<button role="tab" aria-selected="${S.tab===t}" data-tab="${t}">${t}</button>`).join('')}</div>
+<div style="display:flex;flex-direction:column;gap:20px">${programs.filter(p=>S.tab==='All'||p.area===S.tab).map(p=>{const o=!!S.open[p.id];return `<article class="card" style="flex-direction:row;flex-wrap:wrap"><div style="width:4px;background:${catColor[p.area]}"></div>${photo('Program photograph','flex:1 1 260px;aspect-ratio:auto;min-height:220px')}<div class="in" style="flex:2 1 420px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between">${cat(p.area)}<span class="status">${p.when}</span></div><h3 style="font-size:24px">${p.title}</h3><p class="mute">${p.body}</p><p style="font-size:15px"><span class="mute">Serves:</span> ${p.who}</p>
+${o?`<div style="padding-top:14px;border-top:1px solid var(--line)"><p class="mute">${p.more}</p>${p.books?`<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(150px,100%),1fr));margin-top:16px">${['What Is Asthma?','Recognizing and Treating Asthma','Where to Get Help'].map((t,i)=>`<div style="border:1px solid var(--line);border-radius:4px;padding:16px;aspect-ratio:3/4;display:flex;flex-direction:column;justify-content:space-between;border-top:4px solid ${['#6fa6d9','#efdc94','#6cc19b'][i]}"><span class="mute" style="font-size:12px">Breathe Easy · Book ${i+1}</span><span style="font:500 18px/1.2 'Inter Tight',sans-serif">${t}</span></div>`).join('')}</div>`:''}</div>`:''}
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px"><button class="btn o" aria-expanded="${o}" data-toggle="${p.id}">${o?'Show less':'Learn more'}</button>${p.link?`<a class="btn n" href="${p.link}">${p.cta}</a>`:`<a class="btn n" href="#give">Support this program</a>`}</div></div></article>`}).join('')}</div>`)}`,
+
+find:()=>{const list=filteredSites(),sel=sites.find(s=>s.id===S.site);return `${intro('Inhaler Locator','Find an emergency inhaler','')}
+<section class="band" style="padding-top:32px"><div class="wrap"><div class="info" style="margin-bottom:24px"><strong style="font-weight:600">Preview.</strong> The Inhaler Access Network is not yet active; locations shown are examples. In an emergency, call 911.</div>
+<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px"><label for="q" style="position:absolute;left:-9999px">Search by neighborhood</label><input id="q" type="search" placeholder="Search by neighborhood" value="${esc(S.q)}" style="flex:1 1 280px"><div class="seg">${['all','School','Community','Pharmacy'].map(t=>`<button class="chip" aria-pressed="${S.stype===t}" data-stype="${t}">${t==='all'?'All types':t}</button>`).join('')}</div></div>
+<div class="split" style="grid-template-columns:repeat(auto-fit,minmax(min(340px,100%),1fr));gap:24px"><div class="mapbox" style="grid-column:span 2">${mapSvg()}</div>
+<div><p class="mute" style="font-size:14px;margin-bottom:10px">${list.length} location${list.length===1?'':'s'}</p><div class="loc">${list.length?list.map(s=>`<button aria-pressed="${S.site===s.id}" data-site="${s.id}"><span style="display:flex;justify-content:space-between;gap:10px"><strong style="font-weight:600">${s.hood}</strong><span class="status">Planned</span></span><span class="mute" style="display:block;font-size:14px;margin-top:4px">${s.name} · ${s.type}</span></button>`).join(''):'<p class="mute">No locations match your search.</p>'}</div>
+${sel?`<div class="card" style="margin-top:12px"><div class="in"><h3>${sel.name}</h3><p class="mute" style="font-size:15px">${sel.hood}. When active, each site will list hours, trained staff and a direct phone line.</p><button class="btn o" data-toast="Directions will be available once the network is active">Get directions</button></div></div>`:''}</div></div></div></section>`},
+
+events:()=>{const list=events.filter(e=>S.etype==='all'||e.type===S.etype);return `${intro('Events','Events and fundraisers','Each event supports inhaler access and increases public awareness of asthma.')}
+${sec('e1','','Upcoming events',`<div class="seg" style="margin-bottom:12px">${['all','Fundraiser','Outreach','Schools'].map(t=>`<button class="chip" aria-pressed="${S.etype===t}" data-etype="${t}">${t==='all'?'All':t}</button>`).join('')}</div>
+<div class="list">${list.map(e=>`<div class="row-item"><div style="display:flex;gap:20px;align-items:flex-start;flex:1 1 420px"><div class="date">${e.m}<b>${e.d}</b></div><div>${cat(e.type)}<h3 style="margin:4px 0 6px">${e.title}</h3><p class="mute">${e.desc}</p><p class="mute" style="font-size:14px;margin-top:6px">${e.where}</p></div></div><button class="btn o" data-rsvp="${e.id}">Notify me</button></div>`).join('')}</div><p class="mute" style="font-size:13px;margin-top:16px">Dates to be announced.</p>`)}
+${sec('e2','Host an event','Bring a program to your school or organization',`<div class="split" style="align-items:center"><p class="mute" style="font-size:17px">Schools, athletic programs and community organizations can request a session, a drive or a documentary screening.</p><button class="btn n" data-partner="1">Submit a request</button></div>`,'grey')}`},
+
+hand:()=>{const shown=roles.filter(r=>S.filter==='all'||r.tags.includes(S.filter));return `${intro('Get Involved','Volunteer','High school students earn verified service hours at our events, clubs and school sessions. Adult volunteers and professionals are also welcome.')}
+${S.vDone?`<div class="wrap" style="padding-top:32px"><div class="ok" role="status">${okIcon}<h2>Thank you, ${esc(S.vDone.name)}.</h2><p style="margin-top:8px">Your application for <strong style="font-weight:600">${S.vDone.role}</strong> has been received. We will contact you within two business days.</p></div></div>`:''}
+${sec('v1','','Open roles',`<div class="seg" style="margin-bottom:12px">${['all','hours','weekend','remote'].map(f=>`<button class="chip" aria-pressed="${S.filter===f}" data-filter="${f}">${f==='all'?'All roles':tagName[f]}</button>`).join('')}</div>
+<div class="list">${shown.map(r=>`<div class="row-item"><div style="flex:1 1 380px"><h3>${r.title}</h3><p class="mute" style="margin-top:4px">${r.desc}</p><p class="mute" style="font-size:14px;margin-top:6px">${r.when} · ${r.where}${r.tags.includes('hours')?' · <span style="color:var(--mintink)">Service hours eligible</span>':''}</p></div><button class="btn n" data-role="${r.id}">Apply</button></div>`).join('')}</div>`)}
+${sec('v2','Service hours','How service hours are verified',`<div class="grid">${[['Apply','Select a role and provide your school.'],['Participate','Hours are logged at each shift by a coordinator.'],['Verification','We complete and sign your school’s service-hour form.']].map(([t,d],i)=>`<div style="border-top:2px solid var(--navy);padding-top:16px"><p class="eyebrow" style="margin-bottom:6px">Step ${i+1}</p><h3>${t}</h3><p class="mute" style="margin-top:6px">${d}</p></div>`).join('')}</div>`,'grey')}`},
+
+shop:()=>{const list=products.filter(p=>S.cat==='All'||p.cat===S.cat),n=S.bag.reduce((a,b)=>a+b.qty,0);return `<section class="band grey" style="padding-bottom:48px"><div class="wrap" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px"><div><p class="eyebrow">Shop</p><h1>Merchandise</h1><p class="lead" style="margin-top:14px">All proceeds support emergency inhaler access.</p></div><button class="btn o" data-bag="1">View bag (${n})</button></div></section>
+<section class="band" style="padding-top:32px"><div class="wrap"><div class="tabs" role="tablist">${cats.map(c=>`<button role="tab" aria-selected="${S.cat===c}" data-cat="${c}">${c}</button>`).join('')}</div>
+<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))">${list.map(p=>`<article class="card"><button data-prod="${p.id}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;height:100%" aria-label="View ${p.name}">${photo('Product photograph','aspect-ratio:1')}<div class="in"><span class="mute" style="font-size:13px">${p.cat}</span><h3 style="font-size:17px">${p.name}</h3><span style="display:flex;justify-content:space-between;align-items:center;margin-top:auto"><span>${money(p.price)}</span>${p.soon?'<span class="status">Coming soon</span>':p.colors?`<span style="display:flex;gap:4px">${Object.values(p.colors).map(v=>`<span style="width:12px;height:12px;border-radius:2px;border:1px solid var(--line);background:${v}"></span>`).join('')}</span>`:''}</span></div></button></article>`).join('')}</div>
+<p class="mute" style="font-size:13px;margin-top:20px">Sample products and prices.</p></div></section>`},
+
+give:()=>{const d=S.donate,base=d.amt==='custom'?(parseFloat(d.custom)||0):d.amt,fee=Math.round(base*3)/100,tot=base+(d.cover?fee:0);
+const uses={25:'Contributes to an emergency inhaler kit for the network.',50:'Contributes to a classroom set of Breathe Easy books.',100:'Contributes to a school session.',250:'Contributes to launching an after-school club.',500:'Contributes to establishing a new inhaler access site.'};
+const step=d.step===1?`<h1 style="font-size:34px">Make a donation</h1><p class="mute" style="margin:10px 0 24px">Your gift funds inhaler access, asthma education and community programs.</p>
+<div class="seg" style="margin-bottom:14px">${[['monthly','Monthly'],['once','One-time']].map(([k,l])=>`<button class="chip" style="flex:1" aria-pressed="${d.freq===k}" data-freq="${k}">${l}</button>`).join('')}</div>
+<div class="amts">${[25,50,100,250,500].map(v=>`<button class="chip" aria-pressed="${d.amt===v}" data-amt="${v}">$${v}</button>`).join('')}</div>
+<div class="info" style="margin-top:14px">${d.amt==='custom'?'Every contribution supports our programs.':uses[d.amt]}</div>
+<label class="f" for="custom">Other amount</label><input id="custom" type="number" min="1" inputmode="decimal" placeholder="$" value="${esc(d.custom)}" style="max-width:240px">
+<label class="check"><input type="checkbox" id="trib" ${d.tribute?'checked':''}>Make this gift in honor or memory of someone</label>${d.tribute?`<label class="f" for="hon">Honoree name</label><input id="hon">`:''}`
+:d.step===2?`<h1 style="font-size:34px;margin-bottom:8px">Your information</h1><div class="row2"><div><label class="f" for="fn">First name</label><input id="fn" value="${esc(d.first)}" autocomplete="given-name"></div><div><label class="f" for="ln">Last name</label><input id="ln" autocomplete="family-name"></div></div>
+<label class="f" for="em">Email address</label><input id="em" type="email" value="${esc(d.email)}" autocomplete="email">${d.err?`<p class="err" role="alert">${d.err}</p>`:''}
+<label class="check"><input type="checkbox" checked>Send me updates about the Azalea Project</label>`
+:d.step===3?`<h1 style="font-size:34px;margin-bottom:20px">Payment</h1><div class="seg" style="margin-bottom:14px">${[['card','Card'],['paypal','PayPal'],['bank','Bank transfer']].map(([k,l])=>`<button class="chip" style="flex:1" aria-pressed="${d.method===k}" data-method="${k}">${l}</button>`).join('')}</div>
+${d.method==='card'?`<label class="f" for="cn">Card number</label><input id="cn" inputmode="numeric" placeholder="1234 1234 1234 1234" autocomplete="off"><div class="row2"><div><label class="f" for="ex">Expiration</label><input id="ex" placeholder="MM / YY"></div><div><label class="f" for="cv">Security code</label><input id="cv" placeholder="CVC"></div></div>`:`<div class="info">You will be redirected to ${d.method==='paypal'?'PayPal':'your bank'} to complete the payment.</div>`}
+<label class="check"><input type="checkbox" id="cover" ${d.cover?'checked':''}><span>Add ${money(fee)} to cover processing fees.</span></label><p class="mute" style="font-size:13px;margin-top:12px">Prototype — no payment is processed.</p>`
+:`<div class="ok">${okIcon}<h2>Thank you${d.first?', '+esc(d.first):''}.</h2><p style="margin:10px auto 0;max-width:32em">Your ${d.freq==='monthly'?'monthly':'one-time'} gift of ${money(tot)} has been received. A receipt has been sent to ${esc(d.email||'your email')}.</p>
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px"><a class="btn n" href="#home">Return home</a><a class="btn o" href="#hand" style="color:var(--ink)">Volunteer</a><button class="btn o" id="again" style="color:var(--ink)">Give again</button></div></div>`;
+return `<section class="band grey"><div class="wrap split" style="grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:32px">
+<div class="card" style="grid-column:span 2;padding:clamp(22px,4vw,40px)">${d.step<4?`<ol class="steps">${['Amount','Information','Payment'].map((l,i)=>`<li class="${i<d.step?'on':''}">${i+1}. ${l}</li>`).join('')}</ol>`:''}${step}
+${d.step<4?`<div style="display:flex;justify-content:space-between;gap:12px;margin-top:30px;padding-top:22px;border-top:1px solid var(--line)">${d.step>1?`<button class="btn o" id="back">Back</button>`:'<span></span>'}<button class="btn n" id="next" ${base<=0?'disabled style="opacity:.5"':''}>${d.step===3?'Donate '+money(tot)+(d.freq==='monthly'?' monthly':''):'Continue'}</button></div>`:''}</div>
+<aside style="display:flex;flex-direction:column;gap:16px"><div class="card"><div class="in"><span class="eyebrow" style="margin:0">Summary</span><span style="font:500 40px/1.1 'Inter Tight',sans-serif;letter-spacing:-.02em">${money(tot)}</span><span class="mute">${d.freq==='monthly'?'Monthly gift':'One-time gift'}${d.cover?' · includes processing fees':''}</span></div></div>
+<div class="card"><div class="in" style="font-size:15px"><strong style="font-weight:600">Other ways to give</strong><p class="mute">Check, donor-advised fund, or employer matching. Contact us for details.</p></div></div></aside></div></section>
+${sec('d1','Giving','Questions about giving',faqList(gfaqs,'gfaq'))}`}
+};
+
+const view=$('#view'),drawer=$('#drawer'),sheet=$('#sheet'),toastEl=$('#toast');let current='home';
+function toast(t){toastEl.textContent=t;toastEl.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>toastEl.classList.remove('show'),2800)}
+function render(keep){const y=scrollY;view.innerHTML=views[current]();$('#bagCount').textContent=S.bag.reduce((a,b)=>a+b.qty,0);document.querySelectorAll('.drawer nav a').forEach(a=>a.getAttribute('href')==='#'+current?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));if(keep)scrollTo(0,y)}
+function closeDrawer(){drawer.classList.remove('open');$('#menuBtn').setAttribute('aria-expanded','false')}
+function route(){const h=location.hash.slice(1);current=views[h]?h:'home';closeDrawer();sheet.classList.remove('open');render();scrollTo(0,0)}
+function prodSheet(){const p=products.find(x=>x.id===S.pd.id),d=S.pd;$('#sheetBody').innerHTML=`${photo('Product photograph','aspect-ratio:16/10;margin-bottom:18px;border-radius:4px')}<p class="eyebrow" style="margin:0 0 6px">${p.cat}</p><h2 id="sheetT">${p.name}</h2><p style="font-size:20px;margin-top:6px">${money(p.price)}</p>
+${p.colors?`<p style="font-size:14px;font-weight:500;margin:18px 0 8px">Color: ${d.color}</p><div class="seg">${Object.entries(p.colors).map(([n,c])=>`<button class="swatch" style="background:${c}" aria-label="${n}" aria-pressed="${d.color===n}" data-pcolor="${n}"></button>`).join('')}</div>`:''}
+${p.sizes?`<p style="font-size:14px;font-weight:500;margin:18px 0 8px">Size</p><div class="seg">${p.sizes.map(z=>`<button class="chip" aria-pressed="${d.size===z}" data-psize="${z}">${z}</button>`).join('')}</div>`:''}
+<p style="font-size:14px;font-weight:500;margin:18px 0 8px">Quantity</p><div style="display:flex;align-items:center;gap:8px"><button class="chip" data-pqty="-1" aria-label="Decrease quantity">−</button><span style="min-width:32px;text-align:center">${d.qty}</span><button class="chip" data-pqty="1" aria-label="Increase quantity">+</button></div>
+${p.soon?'<button class="btn o full" style="margin-top:22px" data-toast="We will notify you when the book set is available">Notify me</button>':'<button class="btn n full" id="addBag" style="margin-top:22px">Add to bag</button>'}`}
+function bagSheet(){const tot=S.bag.reduce((a,b)=>a+b.qty*products.find(p=>p.id===b.id).price,0);$('#sheetBody').innerHTML=`<h2 id="sheetT" style="margin-bottom:16px">Your bag</h2>${S.bag.length?S.bag.map((b,i)=>{const p=products.find(x=>x.id===b.id);return `<div style="display:flex;justify-content:space-between;gap:12px;align-items:center;border-top:1px solid var(--line);padding:12px 0"><span><span style="display:block">${p.name}</span><span class="mute" style="font-size:14px">${[b.color,b.size].filter(Boolean).join(' · ')} · Qty ${b.qty}</span></span><span style="display:flex;gap:10px;align-items:center">${money(p.price*b.qty)}<button class="chip" data-rm="${i}" aria-label="Remove ${p.name}">Remove</button></span></div>`}).join('')+`<div style="display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:14px;font-size:18px"><span>Total</span><span>${money(tot)}</span></div><p class="mute" style="font-size:14px;margin-top:6px">All proceeds support inhaler access.</p><button class="btn n full" style="margin-top:18px" data-toast="Checkout opens with our first merchandise launch">Check out</button>`:'<p class="mute">Your bag is empty.</p><a class="btn n full" href="#shop" style="margin-top:16px">Browse the shop</a>'}`}
+function openSheet(m){m==='prod'?prodSheet():bagSheet();sheet.classList.add('open')}
+function openForm(kind,title,extra=''){S.form={kind,title};$('#sheetBody').innerHTML=`<p class="eyebrow" style="margin:0 0 6px">${kind==='role'?'Volunteer application':kind==='rsvp'?'Event notification':kind==='contact'?'General inquiry':'Partnership inquiry'}</p><h2 id="sheetT">${title}</h2>
+<form id="sForm" novalidate><label class="f" for="sn">Full name</label><input id="sn" autocomplete="name"><label class="f" for="se">Email address</label><input id="se" type="email" autocomplete="email">${extra}<p class="err" id="sErr" hidden></p><button class="btn n full" style="margin-top:20px">Submit</button></form>`;sheet.classList.add('open');setTimeout(()=>$('#sn').focus(),50)}
+
+document.addEventListener('click',e=>{const t=e.target.closest('button,a,g.pin,[data-close],[data-sclose]');if(!t)return;const d=S.donate,ds=t.dataset;
+ if(t.tagName==='A')closeDrawer();
+ if(t.id==='menuBtn'){drawer.classList.add('open');t.setAttribute('aria-expanded','true');return}
+ if('close' in ds){closeDrawer();return}
+ if('sclose' in ds){sheet.classList.remove('open');return}
+ if(t.id==='bagBtn'||ds.bag){openSheet('bag');return}
+ if(ds.sec){S.closed.has(ds.sec)?S.closed.delete(ds.sec):S.closed.add(ds.sec);render(1);$(`[data-sec="${ds.sec}"]`).focus();return}
+ if(ds.all){ds.ids.split(',').forEach(i=>ds.all==='open'?S.closed.delete(i):S.closed.add(i));render(1);return}
+ if(ds.toast)toast(ds.toast);
+ if(ds.open){S.open[ds.open]=true;S.tab='All';S.closed.delete('w1')}
+ if(ds.phase){S.phase=+ds.phase;render(1)}
+ if(ds.faq){const i=+ds.faq;S.faq=S.faq===i?-1:i;render(1)}
+ if(ds.gfaq){const i=+ds.gfaq;S.gfaq=S.gfaq===i?-1:i;render(1)}
+ if(ds.tab){S.tab=ds.tab;render(1)}
+ if(ds.toggle){S.open[ds.toggle]=!S.open[ds.toggle];render(1)}
+ if(ds.site){if(current!=='find'){S.site=+ds.site;location.hash='find';return}S.site=S.site===+ds.site?null:+ds.site;render(1)}
+ if(ds.stype){S.stype=ds.stype;render(1)}
+ if(ds.etype){S.etype=ds.etype;render(1)}
+ if(ds.filter){S.filter=ds.filter;render(1)}
+ if(ds.role)openForm('role',roles.find(r=>r.id===ds.role).title,'<label class="f" for="ss">School (for service hours)</label><input id="ss"><label class="check"><input type="checkbox">I am 18 or older, or have parent/guardian permission</label>');
+ if(ds.rsvp)openForm('rsvp',events.find(x=>x.id===+ds.rsvp).title);
+ if(ds.contact){e.preventDefault();closeDrawer();openForm('contact','Contact us','<label class="f" for="sm">Message</label><textarea id="sm" rows="4"></textarea>');return}
+ if(ds.partner)openForm('partner','Partner with the Azalea Project','<label class="f" for="so">Organization</label><input id="so"><label class="f" for="sm">How would you like to work together?</label><textarea id="sm" rows="3"></textarea>');
+ if(ds.cat){S.cat=ds.cat;if(current==='shop')render(1)}
+ if(ds.prod){const p=products.find(x=>x.id===ds.prod);S.pd={id:p.id,color:p.colors?Object.keys(p.colors)[0]:null,size:p.sizes?(p.sizes.includes('M')?'M':p.sizes[0]):null,qty:1};openSheet('prod')}
+ if(ds.pcolor){S.pd.color=ds.pcolor;prodSheet()}
+ if(ds.psize){S.pd.size=ds.psize;prodSheet()}
+ if(ds.pqty){S.pd.qty=Math.max(1,Math.min(20,S.pd.qty+ +ds.pqty));prodSheet()}
+ if(t.id==='addBag'){const p=S.pd,ex=S.bag.find(b=>b.id===p.id&&b.color===p.color&&b.size===p.size);ex?ex.qty+=p.qty:S.bag.push({...p});sheet.classList.remove('open');render(1);toast('Added to bag')}
+ if(ds.rm){S.bag.splice(+ds.rm,1);bagSheet();render(1)}
+ if(ds.freq){d.freq=ds.freq;render(1)}
+ if(ds.amt){d.amt=+ds.amt;d.custom='';render(1)}
+ if(ds.method){d.method=ds.method;render(1)}
+ if(t.id==='back'){d.step--;d.err='';render(1)}
+ if(t.id==='again'){Object.assign(d,{step:1,err:''});render();scrollTo(0,0)}
+ if(t.id==='next'){if(d.step===2){d.first=$('#fn').value.trim();d.email=$('#em').value.trim();if(d.email.indexOf('@')<1){d.err='Please enter a valid email address for your receipt.';render(1);$('#em').focus();return}}d.step++;d.err='';render();scrollTo(0,0)}
+});
+const keepFocus=(id,fn)=>{const el=$('#'+id),pos=el.selectionStart;fn(el.value);render(1);const c=$('#'+id);c.focus();try{c.setSelectionRange(pos,pos)}catch(_){}};
+document.addEventListener('input',e=>{const d=S.donate;if(e.target.id==='custom')keepFocus('custom',v=>{d.custom=v;d.amt=v?'custom':50});if(e.target.id==='q')keepFocus('q',v=>{S.q=v;S.site=null})});
+document.addEventListener('change',e=>{const d=S.donate;if(e.target.id==='trib'){d.tribute=e.target.checked;render(1)}if(e.target.id==='cover'){d.cover=e.target.checked;render(1)}});
+document.addEventListener('submit',e=>{e.preventDefault();
+ if(e.target.id==='news'){const v=$('#nEmail').value.trim(),er=$('#nErr');if(v.indexOf('@')<1){er.textContent='Please enter a valid email address.';er.hidden=false;return}e.target.innerHTML='<div class="ok" style="text-align:left"><strong style="font-weight:600;color:var(--ink)">Subscription confirmed.</strong> You will receive our next update by email.</div>';toast('Subscription confirmed')}
+ if(e.target.id==='sForm'){const n=$('#sn').value.trim(),m=$('#se').value.trim(),er=$('#sErr');if(!n||m.indexOf('@')<1){er.textContent='Please provide your name and a valid email address.';er.hidden=false;return}
+  sheet.classList.remove('open');if(S.form.kind==='role'){S.vDone={name:n.split(' ')[0],role:S.form.title};render();scrollTo(0,0);toast('Application received')}else toast(S.form.kind==='rsvp'?'You will be notified when details are confirmed':'Thank you. Our team will follow up.')}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){sheet.classList.remove('open');closeDrawer()}if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('g.pin')){e.preventDefault();e.target.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+addEventListener('hashchange',route);route();
+}
+</script>
+</body>
+</html>
